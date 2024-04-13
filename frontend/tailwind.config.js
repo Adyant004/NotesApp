@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Signika: ["Signika Negative","Poppins"]
+      }
+    },
+  },
+  daisyui: {
+    themes: [ "cupcake", "night","light"],
   },
   plugins: [require("daisyui")],
 }
