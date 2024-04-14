@@ -1,14 +1,41 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <>
-      <div className="flex p-4 gap-2 flex-col justify-center items-center min-w-96 mx-auto rounded-lg font-Signika">
-        <h1 className="font-semibold text-3xl text-center">Login</h1>
+      <motion.div
+        initial={{ opacity: 0, y: -150 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -150 }}
+        transition={{ duration: 0.4, ease: "linear" }}
+        className="flex p-4 gap-2 flex-col justify-center items-center min-w-96 mx-auto rounded-lg font-Signika"
+      >
+        <motion.h1
+          initial={{ opacity: 0, y: -150 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -150 }}
+          transition={{ duration: 0.4, ease: "linear" }}
+          className="font-semibold text-3xl text-center"
+        >
+          Login
+        </motion.h1>
 
-        <form className="w-full">
+        <motion.form
+          initial={{ opacity: 0, y: 150 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 150 }}
+          transition={{ duration: 0.4, ease: "linear" }}
+          className="w-full"
+        >
           <div className="flex flex-col flex-grow flex-1 w-full gap-2">
-            <label className="input input-bordered flex items-center gap-2">
+            <motion.label
+              initial={{ opacity: 0, x: -150 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: -150 }}
+              transition={{ duration: 0.4, ease: "linear" }}
+              className="input input-bordered flex items-center gap-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -18,8 +45,14 @@ const Login = () => {
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
               <input type="text" className="grow" placeholder="Username" />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
+            </motion.label>
+            <motion.label
+              initial={{ opacity: 0, x: -150 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: -150 }}
+              transition={{ duration: 0.4, ease: "linear" }}
+              className="input input-bordered flex items-center gap-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -33,16 +66,36 @@ const Login = () => {
                 />
               </svg>
               <input type="password" className="grow" placeholder="Password" />
-            </label>
-            <Link to='/signup' className="text-sm hover:underline cursor-pointer hover:text-blue-500 mt-2 inline-block">
-              Don't have an account?
-            </Link>
-            <div className="flex justify-center ">
-              <button className="btn btn-primary w-36">Log In</button>
-            </div>
+            </motion.label>
+            <motion.div
+              initial={{ opacity: 0, x: -150 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: -150 }}
+              transition={{ duration: 0.4, ease: "linear" }}
+            >
+              <Link
+                to="/signup"
+                className="text-sm hover:underline cursor-pointer hover:text-blue-500 mt-2 inline-block"
+              >
+                Don't have an account?
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -150 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: -150 }}
+              transition={{ duration: 0.4, ease: "linear" }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95, rotate: "-2.5deg" }}
+              className="flex justify-center "
+            >
+              <Link to={"/"} className="btn btn-primary w-36">
+                Log In
+              </Link>
+            </motion.div>
           </div>
-        </form>
-      </div>
+        </motion.form>
+      </motion.div>
     </>
   );
 };

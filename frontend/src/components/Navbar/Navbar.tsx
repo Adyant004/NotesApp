@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Search from "../Search/Search";
 import CreateNote from "../Create/CreateNote";
+import Logout from "../Logout/Logout";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(
@@ -27,11 +29,21 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar bg-neutral text-neutral-content justify-between p-2">
+      <motion.div
+        initial={{ opacity: 0, y: -150 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -150 }}
+        transition={{ duration: 0.4, ease: "linear" }}
+        className="navbar bg-neutral text-neutral-content justify-between p-2"
+      >
         <button className="btn btn-ghost text-xl">NotesApp</button>
-        <div className="gap-2">
+        <motion.div         initial={{ opacity: 0, x: 150 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 150 }}
+        transition={{ duration: 0.4, ease: "linear" }} className="gap-2">
           <Search />
           <CreateNote />
+          <Logout />
           <label className="swap swap-rotate">
             <input
               type="checkbox"
@@ -55,8 +67,8 @@ const Navbar = () => {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
           </label>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   );
 };
