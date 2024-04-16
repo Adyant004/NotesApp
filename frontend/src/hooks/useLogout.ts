@@ -18,6 +18,8 @@ const useLogout = () => {
 
             localStorage.removeItem('note-user');
             setAuthUser(null);
+            await res.json()
+
         } catch (error: any) {
             toast.error(error.message);            
         } finally {
