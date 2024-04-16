@@ -30,7 +30,7 @@ export const getANote = async (req: customRequest, res: Response) => {
             return res.status(StatusCodes.NOT_FOUND).json({ message: `Note not found!` })
         }
 
-        res.status(StatusCodes.OK).json({ Note })
+        res.status(StatusCodes.OK).json( Note )
     } catch (error: any) {
         console.log("Error in getANote controller: ", error.message);
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Internal server error" });
@@ -46,7 +46,7 @@ export const createNote = async(req: customRequest, res: Response) => {
         }
 
         const Note = await Notes.create(req.body);
-        res.status(StatusCodes.CREATED).json({ Note });
+        res.status(StatusCodes.CREATED).json( Note );
     } catch (error: any) {
         console.log("Error in createNote controller: ", error.message);
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Internal server error" });
@@ -73,7 +73,7 @@ export const updateNote = async(req: customRequest, res: Response) => {
             return res.status(StatusCodes.NOT_FOUND).json({ message: 'Note not found' });
         }
 
-        res.status(StatusCodes.OK).json({ Note })
+        res.status(StatusCodes.OK).json( Note )
 
     } catch (error: any) {
         console.log("Error in updateNote controller: ", error.message);
@@ -86,13 +86,13 @@ export const deleteNote = async(req: customRequest, res: Response) => {
         const { _id: userId } = req.user;
         const { id: noteId } = req.params;
     
-        const Note = await Notes.findByIdAndUpdate({
+        const Note = await Notes.findByIdAndDelete({
             _id: noteId,
             creatorId: userId, 
         })
     
         if(!Note) {
-            return res.status(StatusCodes.NOT_FOUND).json({ message: 'Note not found' });
+            return res.status(StatusCodes.NOT_FOUND).json({ error: 'Note not found' });
         }
     
         res.status(StatusCodes.OK).json({ message: 'Message deleted successfully! '});

@@ -11,7 +11,7 @@ interface AuthActions {
 type AuthContext = AuthState & AuthActions;
 
 const useAuthContext = create<AuthContext>((set) => ({
-  authUser: null,
+  authUser: localStorage.getItem('note-user') || null,
   setAuthUser: (authUser) => set({ authUser }),
 }));
 

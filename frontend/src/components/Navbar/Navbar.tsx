@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Search from "../Search/Search";
 import CreateNote from "../Create/CreateNote";
 import Logout from "../Logout/Logout";
 import { motion } from "framer-motion";
+import useAuthContext from "../../zustand/useAuthContext";
 
-const Navbar = () => {
+const Navbar: FC = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem("data-theme")
       ? localStorage.getItem("data-theme")
@@ -27,6 +28,8 @@ const Navbar = () => {
     }
   }, [theme]);
 
+  const { authUser } = useAuthContext();
+
   return (
     <>
       <motion.div
@@ -34,16 +37,23 @@ const Navbar = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -150 }}
         transition={{ duration: 0.4, ease: "linear" }}
-        className="navbar bg-neutral text-neutral-content justify-between p-2"
+        className="navbar bg-neutral justify-between p-2"
       >
-        <button className="btn btn-ghost text-xl">NotesApp</button>
-        <motion.div         initial={{ opacity: 0, x: 150 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 150 }}
-        transition={{ duration: 0.4, ease: "linear" }} className="gap-2">
-          <Search />
-          <CreateNote />
-          <Logout />
+        <button className="btn btn-ghost text-neutral-content text-xl">NotesApp</button>
+        <motion.div
+          initial={{ opacity: 0, x: 150 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 150 }}
+          transition={{ duration: 0.4, ease: "linear" }}
+          className="gap-2"
+        >
+          {authUser && (
+            <>
+              <Search />
+              <CreateNote />
+              <Logout />
+            </>
+          )}
           <label className="swap swap-rotate">
             <input
               type="checkbox"
@@ -52,7 +62,7 @@ const Navbar = () => {
             />
 
             <svg
-              className="swap-off fill-current w-10 h-10"
+              className="swap-off fill-current w-10 h-10 text-neutral-content"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >

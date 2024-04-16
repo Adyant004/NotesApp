@@ -1,21 +1,41 @@
+import { FormEvent, useState } from "react";
+import { CiSearch } from "react-icons/ci";
+import { IoIosClose } from "react-icons/io";
+import useNoteContext from "../../zustand/useNoteContext";
+import toast from "react-hot-toast";
+
 const Search = () => {
+  const [search,setSearch] = useState('');
+  const { notes,searchNote,setSearchNote } = useNoteContext();
+  
+  const handleSearch = async(e : FormEvent) => {
+    e.preventDefault();
+    if(!search) return;
+    const note = notes?.find((n) => n.heading.toLowerCase().includes(search.toLowerCase()));
+    if(note) {
+      setSearchNote(note);
+    } else {
+      toast.error('Note not found')
+      setSearchNote(null);
+    }
+  }
+
+  const handleClose = () =>{
+      setSearch('');
+      setSearchNote(null);
+  }
+
+  console.log(searchNote)
+
   return (
     <>
-      <label className="input h-10 input-bordered font-Signika flex items-center gap-2">
-        <input type="text" className="grow w-48" placeholder="Search Heading" />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="w-4 h-4 opacity-70 cursor-pointer"
-        >
-          <path
-            fillRule="evenodd"
-            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </label>
+      <div className="flex items-center gap-2 font-Signika">
+      <CiSearch onClick={handleSearch} className="text-neutral-content cursor-pointer" size={40} />
+      <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search heading" className="input h-10 input-bordered w-full max-w-xs" />
+      {
+        search && (<IoIosClose onClick={handleClose} className="text-neutral-content cursor-pointer" size={40} />)
+      }
+      </div>
     </>
   );
 };

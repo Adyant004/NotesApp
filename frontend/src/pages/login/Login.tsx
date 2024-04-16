@@ -1,7 +1,22 @@
 import { motion } from "framer-motion";
+import { FC, FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
-const Login = () => {
+const Login: FC = () => {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { loading, login } = useLogin();
+
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+    await login(inputs);
+  };
+
   return (
     <>
       <motion.div
@@ -27,6 +42,7 @@ const Login = () => {
           exit={{ opacity: 0, y: 150 }}
           transition={{ duration: 0.4, ease: "linear" }}
           className="w-full"
+          onSubmit={handleLogin}
         >
           <div className="flex flex-col flex-grow flex-1 w-full gap-2">
             <motion.label
@@ -44,7 +60,15 @@ const Login = () => {
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
-              <input type="text" className="grow" placeholder="Username" />
+              <input
+                value={inputs.username}
+                onChange={(e) =>
+                  setInputs({ ...inputs, username: e.target.value })
+                }
+                type="text"
+                className="grow"
+                placeholder="Username"
+              />
             </motion.label>
             <motion.label
               initial={{ opacity: 0, x: -150 }}
@@ -65,7 +89,15 @@ const Login = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <input type="password" className="grow" placeholder="Password" />
+              <input
+                value={inputs.password}
+                onChange={(e) =>
+                  setInputs({ ...inputs, password: e.target.value })
+                }
+                type="password"
+                className="grow"
+                placeholder="Password"
+              />
             </motion.label>
             <motion.div
               initial={{ opacity: 0, x: -150 }}
@@ -89,9 +121,13 @@ const Login = () => {
               whileTap={{ scale: 0.95, rotate: "-2.5deg" }}
               className="flex justify-center "
             >
-              <Link to={"/"} className="btn btn-primary w-36">
-                Log In
-              </Link>
+              <button className="btn btn-primary w-36">
+                {loading ? (
+                  <span className="loading loading-dots loading-xs"></span>
+                ) : (
+                  "Log in"
+                )}
+              </button>
             </motion.div>
           </div>
         </motion.form>

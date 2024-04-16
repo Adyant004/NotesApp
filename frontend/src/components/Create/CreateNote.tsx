@@ -1,17 +1,35 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { IoMdAddCircle } from "react-icons/io";
 import { motion } from "framer-motion";
+import useCreateNote from "../../hooks/useCreateNote";
 
 const CreateNote = () => {
   const [close, setClose] = useState(false);
+  const [inputs,setInputs] = useState({
+    heading: "",
+    content: ""
+  })
+
+  const {loading,create} = useCreateNote();
 
   const handleClose = () => {
     setClose(!close);
   };
+
+  const handleCreate = async(e: FormEvent) => {
+    e.preventDefault();
+    if(loading) return;
+    await create(inputs);
+    if(inputs.content) setClose(!close);
+    setInputs({
+      heading: "",
+      content: ""
+    })
+  }
   return (
     <>
       <div onClick={handleClose} className="cursor-pointer">
-        <IoMdAddCircle size={40} />
+        <IoMdAddCircle className="text-neutral-content" size={40} />
       </div>
       {close && (
         <motion.div
@@ -29,10 +47,14 @@ const CreateNote = () => {
                 type="text"
                 placeholder="Heading"
                 className="input input-bordered w-full max-w-xs"
+                value={inputs.heading}
+                onChange={(e) => setInputs({...inputs, heading: e.target.value})}
               />
               <textarea
                 className="textarea textarea-bordered h-60"
                 placeholder="Content"
+                value={inputs.content}
+                onChange={(e) => setInputs({...inputs,content: e.target.value})}
               ></textarea>
             </div>
             <div className="flex justify-between">
@@ -43,6 +65,7 @@ const CreateNote = () => {
               Close
             </button>
             <button
+              onClick={handleCreate}
               className="btn btn-primary flex w-20"
             >
               Create
